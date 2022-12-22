@@ -48,7 +48,7 @@ export default function Login() {
             <section className="form">
                 <img src={logoImage} alt="Erudio Logo"/>
                 <form onSubmit={login}>
-                    <h1>Access your Account</h1>
+                    <h1>Acesse ou cadastro</h1>
                     <input
                         placeholder="Username"
                         value={usuario}
