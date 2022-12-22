@@ -77,7 +77,7 @@ public class Postagem {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
-
+	
 	public Tema getTema() {
 		return tema;
 	}

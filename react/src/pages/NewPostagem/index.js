@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import { useNavigate, Link, useParams} from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
+import { FiArrowLeft } from 'react-icons/fi'
+
 import './styles.css';
 
 import api from '../../services/api'
@@ -7,44 +9,47 @@ import api from '../../services/api'
 import logoImage from '../../assets/logo.svg'
 
 export default function NewPostagem() {
-    const [tema, setTema] = useState('');
-    const [usuario, setUsuario] = useState('');
-    const id = 0 ;
-
-
+    const [id, setId] = useState(null);
     const [tituloLivro, setTitulo] = useState('');
     const [descricao, setDescricao] = useState('');
     const [foto, setFoto] = useState('');
     const [autor, setAutor] = useState('');
+
+    const [tema, setTema] = useState('');
+    const [usuario, setUsuario] = useState('');
+
+    //const usuarioLogado = localStorage.getItem('usuario');
+    const accessToken = localStorage.getItem('accessToken');
+
     const navigate = useNavigate();
+
 
     async function cadastrarPostagem(e){
         e.preventDefault();
 
         const data = {
-                "tema": {
-                    "id": tema,
-                },
-                "usuario": {
-                    "id": usuario,
-                },
-                "id": id,
-                "tituloLivro": tituloLivro,
-                "descricao": descricao,
-                "foto": foto,
-                "autor": autor
+                tema,
+                usuario,
+                
+                tituloLivro,
+                descricao,
+                foto,
+                autor,    
         };
+    
         try {
             await api.post('postagem', data, {
-                    headers: {
-                        Authorization: 'Basic cm9vdEByb290LmNvbTpyb290cm9vdA=='
-                    }
-                });
-            
+                headers : {
+                    Authorization: accessToken
+                    //Authorization: `Basic ${token}`
+                }
+
+            });
+
             alert('Cadastro ok')
             navigate('/postagens');
         } catch (err) {
-            alert('Error while recording Book! Try again!')
+            alert('Erro ao cadastrar postagem!')
         }
     };
 
@@ -55,53 +60,35 @@ export default function NewPostagem() {
             <section className="form">
             <img src={logoImage} alt="Erudio"/>
                     <Link className="back-link" to="/postagens">
-                        Back to Postagens
+                    <FiArrowLeft size={16} color="#251fc5"/> Voltar
                     </Link>
                 </section>
 
                 <form onSubmit={cadastrarPostagem}>
                     <h1>Cadastrar postagem</h1>
+                
                     <input
-                        type="text" placeholder="id Tema" name="Tema"
-                        value={tema}
-                        onChange={e => setTema(e.target.value)}
-                    />
-                    
-
-                    <input
-                        type="text" placeholder="id Usuario" name="Usuario"
-                        value={usuario}
-                        onChange={e => setUsuario(e.target.value)}
-                    />
-
-                    
-                    <input
-                        type="text" placeholder="Nome" name="Nome"
+                        placeholder="Titulo"
                         value={tituloLivro}
                         onChange={e => setTitulo(e.target.value)}
                     />
                 
                     <input
-                        type="text" placeholder="Descricao do livro"
+                        placeholder="Descricao do livro"
                         value={descricao}
                         onChange={e => setDescricao(e.target.value)}
                     />
                     <input
-                        type="text" placeholder="Foto do Livro"
+                        placeholder="Foto do Livro"
                         value={foto}
                         onChange={e => setFoto(e.target.value)}
                     />
 
                     <input
-                        type="text" placeholder="Autor do Livro"
+                        placeholder="Autor do Livro"
                         value={autor}
                         onChange={e => setAutor(e.target.value)}
                     />
-                   
-                    
-
-                    
-
                     <button className="button" type="submit">Cadastrar </button>
                 </form>
 

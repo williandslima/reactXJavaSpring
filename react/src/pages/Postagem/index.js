@@ -11,19 +11,17 @@ import logoImage from '../../assets/logo.svg'
 export default function Postagens(){
 
     const [postagens, setPostagens] = useState([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     
     const username = localStorage.getItem('usuario');
     const accessToken = localStorage.getItem('accessToken');
 
     const navigate = useNavigate();
-
+    
     async function logout() {
         localStorage.clear();
         navigate('/');
     }
-
-
 
 
     async function editPostagem(id) {
@@ -33,11 +31,12 @@ export default function Postagens(){
             alert('Edit failed! Try again.');
         }
     }
+
     async function deletePostagem(id) {
         try {
             await api.delete(`api/postagem/v1/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: accessToken
                 }
             })
 
@@ -46,10 +45,12 @@ export default function Postagens(){
             alert('Delete failed! Try again.');
         }
     }
+
+
     async function fetchMorePostagens() {
         const response = await api.get('postagem/all', {
             headers: {
-                Authorization: `Bearer ${accessToken}`
+                Authorization: accessToken
             },
             params: {
                 page: page,
@@ -57,8 +58,9 @@ export default function Postagens(){
                 direction: 'asc'
             }
         });
-
-        setPostagens([ ...postagens, ...response.data._embedded.postagemVoes])
+        console.log(response.data)
+        //setPostagens([ ...postagens, ...response._])
+        //console.log (response.data);
         setPage(page + 1);
     }
 
@@ -71,10 +73,13 @@ export default function Postagens(){
             <header>
                 <img src={logoImage} alt="Erudio"/>
                 <span>Bem vindo, <strong>{username.toUpperCase()}</strong>!</span>
+                <Link className="button" to="/tema/new/0">Add novo Tema </Link>
                 <Link className="button" to="/postagem/new/0">Add nova Postagem </Link>
+
                 <button onClick={logout} type="button">
                     <FiPower size={18} color="#251FC5" />
                 </button>
+
             </header>
 
             <h1>Postagens salvas</h1>
@@ -89,6 +94,10 @@ export default function Postagens(){
                         <p>{postagem.foto}</p>
                         <strong>Autor:</strong>
                         <p>{postagem.autor}</p>
+                        <strong>Tema:</strong>
+                        <p>{postagem.tema}</p>
+                        <strong>Usuario:</strong>
+                        <p>{postagem.usuario}</p>
 
                         <button onClick={() => editPostagem(postagem.id)} type="button">
                             <FiEdit size={20} color="#251FC5"/>

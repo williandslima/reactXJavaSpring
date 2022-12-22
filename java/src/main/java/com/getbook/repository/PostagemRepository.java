@@ -11,6 +11,7 @@ import java.util.List;
 public interface PostagemRepository extends JpaRepository<Postagem,Long> {
  
 	public List<Postagem>findAllByTituloLivroContainingIgnoreCase(@Param ("tituloLivro") String tituloLivro);
+	
 	//public Optional<PostagemVO> findAllByTituloLivro(String tituloLivro);
 
 }

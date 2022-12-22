@@ -1,9 +1,23 @@
 package com.getbook.data.vo;
 
-public class PostagemVO {
 
+import java.io.Serializable;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
+
+
+@JsonPropertyOrder({ "id", "tituloLivro", "descricao", "foto", "autor"})
+public class PostagemVO extends RepresentationModel<PostagemVO> implements Serializable{
+
+	private static final long serialVersionUID = 1l;
 	
-	private Long id;
+	@JsonProperty("id")
+	@Mapping("id")
+	private Long key;
 	private String tituloLivro;
 	private String descricao;
 	private String foto;
@@ -20,16 +34,31 @@ public class PostagemVO {
 	@NotNull
 	private Usuario usuario;
 */
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 
 	public String getTituloLivro() {
 		return tituloLivro;
+	}
+
+	/**
+	 * @return the key
+	 */
+	public Long getKey() {
+		return key;
+	}
+
+	/**
+	 * @param key the key to set
+	 */
+	public void setKey(Long key) {
+		this.key = key;
+	}
+
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public void setTituloLivro(String tituloLivro) {

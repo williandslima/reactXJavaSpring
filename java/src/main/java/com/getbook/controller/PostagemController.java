@@ -3,14 +3,18 @@ package com.getbook.controller;
 import com.getbook.model.Postagem;
 import com.getbook.repository.PostagemRepository;
 
+
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +29,8 @@ public class PostagemController {
 
 	@ApiOperation(value = "Find all postagens" )
 	@GetMapping(value = "/all", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public ResponseEntity<List<Postagem>> getAll() {
+	public ResponseEntity<List<Postagem>> getAll(){
+		
 		return ResponseEntity.ok(postagemRepository.findAll());
 
 	}

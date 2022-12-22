@@ -12,10 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 @EnableWebSecurity
 public class BasicSecurityConfig {
-
+	
+	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,7 +36,8 @@ public class BasicSecurityConfig {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().csrf().disable()
-            .cors();
+            .cors()
+            .and();
 
         http
             .authorizeHttpRequests((auth) -> auth
@@ -47,5 +50,8 @@ public class BasicSecurityConfig {
         return http.build();
 
     }
+    
+    
+    
 
 }
