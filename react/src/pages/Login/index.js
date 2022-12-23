@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate} from 'react-router-dom';
 import './styles.css';
-
+import axios from 'axios';
 import api from '../../services/api'
 
 import logoImage from '../../assets/logo.svg'
@@ -14,34 +14,32 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-
-
-    async function cadastrarUsuario() {
-        localStorage.clear();
-        navigate('/cadastrar');
-    }
-
-
+    //funcao de login
     async function login(e){
         e.preventDefault();
-
         const data = {
-            usuario,
-            senha,
+            usuario: usuario,
+            senha: senha,
         };
 
         try {
             const response = await api.post('usuarios/logar', data);
-
             localStorage.setItem('usuario', usuario);
             localStorage.setItem('accessToken', response.data.token);
+            localStorage.setItem('nome', response.data.nome)
             alert('OK');
-
             navigate('/postagens')
         } catch (err) {
             alert('Login failed! Try again!');
         }
     };
+
+   //funcao para entrar no cadastro
+    async function cadastrarUsuario() {
+        localStorage.clear();
+        navigate('/cadastrar');
+    }
+
 
     return (
         <div className="login-container">

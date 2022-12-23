@@ -1,15 +1,13 @@
 package com.getbook.controller;
 
-import com.getbook.model.Postagem;
-import com.getbook.repository.PostagemRepository;
-
-
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PagedResourcesAssembler;
 
+import com.getbook.model.Postagem;
+import com.getbook.repository.PostagemRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,12 @@ public class PostagemController {
 
 	@Autowired
 	private PostagemRepository postagemRepository;
-
+	
+	//link de paginas
+	@Autowired
+	PagedResourcesAssembler<Postagem> assembler;
+	
+	
 	@ApiOperation(value = "Find all postagens" )
 	@GetMapping(value = "/all", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public ResponseEntity<List<Postagem>> getAll(){
